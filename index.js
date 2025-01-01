@@ -1,8 +1,8 @@
 const express = require('express');
-
 const app     = express();
 var cors      = require('cors');
 app.use(cors());
+app.use(express.static('public'));
 
 const hotsiteRoute = require('./routes/Hotsite');
 
@@ -18,9 +18,6 @@ db.sequelize.sync().then((req)=> {
         console.log("Server running");
     })
 });
-
-app.use('public/Images', express.static('public/Images'))
- 
 
 app.use('/hotsite', hotsiteRoute);
 

@@ -10,7 +10,7 @@ const addSite = async (req,res)=>{
   let info = {
     id: req.body.id,
     urlSite: req.body.urlSite,
-    image: req.file.originalname,
+    image: req.file.originalname.replace(/\s+/g, '-'),
     primaryColor: req.body.primaryColor,
     secondColor: req.body.secondColor,
   }
@@ -26,7 +26,7 @@ const updateSite = async (req,res)=>{
   if (req.body.urlSite) updateValues.urlSite = req.body.urlSite
   if (req.body.primaryColor) updateValues.primaryColor = req.body.primaryColor
   if (req.body.secondColor) updateValues.secondColor = req.body.secondColor
-  if (req.file) updateValues.image = req.file.originalname
+  if (req.file) updateValues.image = req.file.originalname.replace(/\s+/g, '-');
   const site = await Hotsite.update( 
     updateValues, 
     {
@@ -36,12 +36,13 @@ const updateSite = async (req,res)=>{
   res.status(200).send(site) 
 }
 
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, '../../farma4u-client-marcelo/public')
+      cb(null, 'public')
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname)
+    cb(null, file.originalname.replace(/\s+/g, '-'))
   }
 })
 
@@ -52,7 +53,7 @@ const upload = multer({
   fileFilter: (req,file,cb) => {
       const fileTypes = /jpeg|jpg|png|gif/
       const mimeType    = fileTypes.test(file.mimetype)
-      const extName     = fileTypes.test(path.extname(file.originalname))  
+      const extName     = fileTypes.test(path.extname(file.originalname.replace(/\s+/g, '-')))  
       if (mimeType && extName){
         return cb(null, true)
       }

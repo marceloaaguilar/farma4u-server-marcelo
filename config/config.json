@@ -1,1 +1,18 @@
-{}
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "farm4u",
+    "host": "localhost",
+    "port": 3306,
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "root",
+    "database": "farma4u",
+    "host": "localhost",
+    "dialect": "mysql",
+    "port"   :3306
+  }
+}
